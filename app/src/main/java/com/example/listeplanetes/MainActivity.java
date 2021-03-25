@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Data> planetes;
+    ArrayList<Data> planetes;
     ListView listview;
     PlanetAdapter adapter;
     Data data;
@@ -36,19 +36,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        listview = (ListView) findViewById(R.id.listView);
         btn = findViewById(R.id.button);
+        listview = (ListView) findViewById(R.id.listView);
         data =new Data();
         data.installePlanetes();
         adapter = new PlanetAdapter(this, data);
         listview.setAdapter(adapter);
-
         btn.setEnabled(false);
 
 
         btn.setOnClickListener((view) -> {
+
             int score = 0;
             String[] taillePlanetes = data.getTaillePlanetes();
 
@@ -60,13 +58,35 @@ public class MainActivity extends AppCompatActivity {
                     score++;
                 }
             }
-            Toast.makeText(MainActivity.this, "Score " +score+" / "+taillePlanetes.length, Toast.LENGTH_LONG).show();
+
+
+            Toast.makeText(MainActivity.this, "Score"  +score +" / " + taillePlanetes.length, Toast.LENGTH_LONG).show();
         });
 
 
 
 
     }
+/*
+    private View.OnClickListener tailleListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            int score = 0;
+            String[] taillePlanetes = data.getTaillePlanetes();
+
+            for (int i = 0; i < taillePlanetes.length; i++) {
+                 v = listview.getChildAt(i);
+                spinner = v.findViewById(R.id.spinner);
+                String taille = spinner.getSelectedItem().toString();
+                if (taille.equals(taillePlanetes[i])) {
+                    score++;
+                }
+            }
+            Toast.makeText(MainActivity.this, "Score " + score + " / " + taillePlanetes.length, Toast.LENGTH_LONG).show();
+        }
+    };
+*/
 }
 
 

@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -24,9 +25,10 @@ public class PlanetAdapter extends BaseAdapter {
     private ArrayList<Planete> planetes;
     public static int nb = 0;
 
-    public PlanetAdapter(MainActivity context, Data data){
+    public PlanetAdapter(MainActivity mainActivityContext, Data data){
+        this.planetes = data.getPlanetes();
         this.data = data;
-        this.mainActivityContext = context;
+        this.mainActivityContext = mainActivityContext;
 
 
     }
@@ -46,12 +48,18 @@ public class PlanetAdapter extends BaseAdapter {
     }
 
 
+    @Override
+    public int getViewTypeCount() {
+        return getCount();
+    }
+
 
     @Override
     public View getView( int position, View convertView, ViewGroup parent) {
 
 
         View itemView = convertView;
+
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater)
                     mainActivityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -62,7 +70,7 @@ public class PlanetAdapter extends BaseAdapter {
         final CheckBox checkbox = itemView.findViewById(R.id.checkbox);
         final Spinner spinner = itemView.findViewById(R.id.spinner);
 
-        nomPlanete.setText(planetes.get(position).getNom());
+        nomPlanete.setText(this.planetes.get(position).getNom());
 
         final ArrayAdapter<String> spinadapter = new ArrayAdapter<String>(mainActivityContext, android.R.layout.simple_spinner_item, data.getTaillePlanetes());
         spinadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -70,7 +78,7 @@ public class PlanetAdapter extends BaseAdapter {
 
 
         checkbox.setOnCheckedChangeListener((compoundButton,b) -> {
-            CheckBox checkBox = (CheckBox)  compoundButton.findViewById(R.id.checkbox);
+            CheckBox checkBox = compoundButton.findViewById(R.id.checkbox);
             spinner.setEnabled(!checkBox.isChecked());
 
             if(checkBox.isChecked()){

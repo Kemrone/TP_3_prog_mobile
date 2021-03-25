@@ -10,6 +10,9 @@ public class Data {
         this.planetes = new ArrayList<Planete>();
     }
 
+    public void setPlanetes(ArrayList<Planete> planetes) {
+        this.planetes = planetes;
+    }
 
     public Planete get(int position){
 
@@ -35,7 +38,7 @@ public class Data {
     }
 
     public String[] getTaillePlanetes(){
-        String[] listPlanetes = new String[0];
+        String[] listPlanetes = new String[this.planetes.size()];
         int i = 0;
         for (Planete planete : this.planetes){
 
@@ -46,4 +49,7 @@ public class Data {
     }
 
 
+    public ArrayList<Planete> getPlanetes() {
+        return this.planetes;
+    }
 }
